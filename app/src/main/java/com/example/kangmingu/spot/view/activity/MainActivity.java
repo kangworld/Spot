@@ -1,4 +1,4 @@
-package com.example.kangmingu.spot;
+package com.example.kangmingu.spot.view.activity;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -12,12 +12,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.kangmingu.spot.R;
+import com.example.kangmingu.spot.view.fragment.MapFragment;
 
 public class MainActivity extends FragmentActivity {
     private static final int MY_PERMISSION_REQUEST_LOCATION = 1000;
