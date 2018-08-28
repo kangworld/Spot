@@ -20,6 +20,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.kangmingu.spot.R;
+import com.example.kangmingu.spot.view.fragment.BlankFragment;
+import com.example.kangmingu.spot.view.fragment.DetailFragment;
 import com.example.kangmingu.spot.view.fragment.MapFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -79,5 +81,12 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.add(R.id.mapFragment, mapFragment);
         fragmentTransaction.commit();
+    }
+
+    public void gotoDetail(Fragment fragment){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.mapFragment, fragment);
+        ft.commit();
     }
 }

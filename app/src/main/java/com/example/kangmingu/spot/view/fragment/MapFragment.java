@@ -1,11 +1,13 @@
 package com.example.kangmingu.spot.view.fragment;
 
 import android.Manifest;
+import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -13,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -30,6 +33,7 @@ import com.example.kangmingu.spot.R;
 import com.example.kangmingu.spot.naverApi.NMapPOIflagType;
 import com.example.kangmingu.spot.naverApi.NMapViewerResourceProvider;
 import com.example.kangmingu.spot.utils.GeoPointer;
+import com.example.kangmingu.spot.view.activity.MainActivity;
 import com.nhn.android.maps.NMapCompassManager;
 import com.nhn.android.maps.NMapContext;
 import com.nhn.android.maps.NMapController;
@@ -63,6 +67,9 @@ public class MapFragment extends Fragment {
     private NMapLocationManager mMapLocationManager;
     private NMapCompassManager mMapCompassManager;
     private NMapPOIdataOverlay.OnStateChangeListener onPOIdataStateChangeListener;
+    private FragmentManager fragmentManager;
+    private android.support.v4.app.FragmentTransaction fragmentTransaction;
+    private DetailFragment detailFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,6 +80,8 @@ public class MapFragment extends Fragment {
         setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -262,16 +271,31 @@ public class MapFragment extends Fragment {
         item1.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW); //마커 선택 시 표시되는 말풍선의 오른쪽 아이콘을 설정한다.
         item1.setRightButton(true); //마커 선택 시 표시되는 말풍선의 오른쪽 버튼을 설정한다.
 
+
         poiData.addPOIitem(126.975967, 37.573841 , "세종로공원", markerId, 0);
         poiData.endPOIdata(); // POI 아이템 추가 종료
         //POI data overlay 객체 생성(여러 개의 오버레이 아이템을 포함할 수 있는 오버레이 클래스)
         NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
         poiDataOverlay.showAllPOIdata(13); //모든 POI 데이터를 화면에 표시(zomLevel)
         //POI 아이템이 선택 상태 변경 시 호출되는 콜백 인터페이스 설정
-        poiDataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
+        poiDataOverlay.setOnStateChangeListener(new NMapPOIdataOverlay.OnStateChangeListener() {
+            @Override
+            public void onFocusChanged(NMapPOIdataOverlay nMapPOIdataOverlay, NMapPOIitem nMapPOIitem) {
+
+            }
+
+            @Override
+            public void onCalloutClick(NMapPOIdataOverlay nMapPOIdataOverlay, NMapPOIitem nMapPOIitem) {
+                ((MainActivity)getActivity()).gotoDetail(DetailFragment.newInstance("파라1",nMapPOIitem.getTitle()));
+
+
+            }
+        });
     }
 
-    //위치 변경 콜백 인터페이스 정의
+
+
+        //위치 변경 콜백 인터페이스 정의
     private final NMapLocationManager.OnLocationChangeListener onMyLocationChangeListener =
             new NMapLocationManager.OnLocationChangeListener() { //위치 변경 콜백 인터페이스 정의
                 //위치가 변경되면 호출
