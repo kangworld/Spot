@@ -115,6 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/bottom_top_border"
+            android:textAllCaps="false"
             android:text="Top" />
 
         <Button
@@ -123,6 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/bottom_top_border"
+            android:textAllCaps="false"
             android:text="Recent" />
 
     </LinearLayout>
