@@ -8,15 +8,7 @@ import java.util.ArrayList;
 
 public class ApplicationController extends Application {
     // 사용자 속성 저장
-    int movieSel;
-    int timeSel;
-    String seatSel;
-    String msgtosv;
-    String selMvname;
-    String selMvUrl;
-
-    String usrID;
-
+    String JsonString;
 
     SharedPreferences pre;
     SharedPreferences.Editor edit;
@@ -55,104 +47,34 @@ public class ApplicationController extends Application {
         pre = getSharedPreferences("hh", 0);
         edit = pre.edit();
 
-        this.movieSel = pre.getInt("movieSel", movieSel);
-        this.timeSel = pre.getInt("timeSel", timeSel);
-        this.seatSel = pre.getString("seatSel", seatSel);
-        this.msgtosv = pre.getString("msgtosv", msgtosv);
-        this.selMvname = pre.getString("selMvname", selMvname);
+
+        this.JsonString = pre.getString("JsonString", JsonString);
 
 
     }
 
-    public void setMovieSel(int M) {
-        Log.d("@@@", "11111");
-        this.movieSel = M;
-        Log.d("@@@", "222222");
-        SharedPreferences.Editor editor = pre.edit();
-        Log.d("@@@", "3333333");
-        editor.clear();
-        Log.d("@@@", "444444444");
-        editor.commit();
-        Log.d("@@@", "555555555");
-        editor.putInt("movieSel", M);
-        Log.d("@@@", "666666666");
-        editor.commit();
-        Log.d("@@@", "7777777777");
 
-    }
 
-    public void setTimeSel(int M) {
-        this.timeSel  = M;
+    public void setJsonString(String M) {
+        this.JsonString = M;
         SharedPreferences.Editor editor = pre.edit();
         editor.clear();
         editor.commit();
-        editor.putInt("timeSel", M);
-        editor.commit();
-
-    }
-
-    public void setSeatSel(String M) {
-        this.seatSel = M;
-        SharedPreferences.Editor editor = pre.edit();
-        editor.clear();
-        editor.commit();
-        editor.putString("seatSel", M);
-        editor.commit();
-
-    }
-
-    public void setSelMvname(String M) {
-        this.selMvname  = M;
-        SharedPreferences.Editor editor = pre.edit();
-        editor.clear();
-        editor.commit();
-        editor.putString("selMvname", M);
-        editor.commit();
-
-    }
-
-    public void setSelMvUrl(String M) {
-        this.selMvUrl  = M;
-        SharedPreferences.Editor editor = pre.edit();
-        editor.clear();
-        editor.commit();
-        editor.putString("selMvUrl", M);
-        editor.commit();
-
-    }
-
-    public void setUsrID(String M) {
-        this.usrID  = M;
-        SharedPreferences.Editor editor = pre.edit();
-        editor.clear();
-        editor.commit();
-        editor.putString("usrID", M);
+        editor.putString("JsonString", M);
         editor.commit();
 
     }
 
 
-    public int getTimeSel(){
+
+
+
+
+    public String getJsonString(){
 
         pre = getSharedPreferences("hh",0);
         edit = pre.edit();
-        this.timeSel = pre.getInt("timeSel", timeSel);
-        return timeSel;
-    }
-
-    public int getMovieSel(){
-
-        pre = getSharedPreferences("hh",0);
-        edit = pre.edit();
-        this.movieSel = pre.getInt("movieSel", movieSel);
-        return movieSel;
-    }
-
-    public String getSeatSel(){
-
-        pre = getSharedPreferences("hh",0);
-        edit = pre.edit();
-        this.seatSel = pre.getString("seatSel", seatSel);
-        return seatSel;
+        this.JsonString = pre.getString("JsonString", JsonString);
+        return JsonString;
     }
 }
