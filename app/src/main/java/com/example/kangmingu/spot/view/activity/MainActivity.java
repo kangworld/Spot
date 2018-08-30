@@ -1,6 +1,9 @@
 package com.example.kangmingu.spot.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,11 +27,29 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.kangmingu.spot.R;
+import com.example.kangmingu.spot.utils.ApplicationController;
 import com.example.kangmingu.spot.utils.GeoPointer;
 import com.example.kangmingu.spot.view.fragment.MainMapFragment;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.nhn.android.maps.maplib.NGeoPoint;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -150,6 +171,33 @@ public class MainActivity extends AppCompatActivity {
 //            Log.d("내용물", mMapController.toString());
 //            mMapController.animateTo(myLocation);
 //            mMapController.setZoomLevel(15);
+
+
+
+            ContentValues cv = new ContentValues();
+
+            cv.put("serviceKey", "ZGXGqYCRRrVqCB1E4H2Cem6OQfrUITIMKl8I42y5p%2BSxQxpYmLG31HXHu8StoTqm6UVh%2FTiZnYA1wEt7RI3oYA%3D%3D");
+            cv.put("numOfRows", 10);
+            cv.put("pageSize", 10);
+            cv.put("pageNo", 1);
+            cv.put("startPage", 1);
+            cv.put("MobileOS", "AND");
+            cv.put("MobileApp", "Spot");
+            cv.put("listYN", "Y");
+            cv.put("arrange", "A");
+            cv.put("mapX", 126.981611);
+            cv.put("mapY", 37.568477);
+            cv.put("radius", 1000);
+            cv.put("_type","json");
+
+
+            String url = "http://api.visitkorea.or.kr/openapi/service/rest/EngService/locationBasedList?";
+            NetworkTask networkTask = new NetworkTask(url, cv);
+            networkTask.execute();
+
+
+
+
         }
 
         @Override
@@ -195,4 +243,64 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.mapFragment, fragment);
         ft.commit();
     }
-}
+
+    public class NetworkTask extends AsyncTask<Void, Void, String> {
+
+        private String url;
+        private ContentValues values;
+
+        public NetworkTask(String url, ContentValues values) {
+
+            this.url = url;
+            this.values = values;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String result; // 요청 결과를 저장할 변수.
+            RequestActivity requestHttpURLConnection = new RequestActivity();
+            result = requestHttpURLConnection.request(url, values); // 해당 URL로 부터 결과물을 얻어온다.
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+
+//            Gson gson = new Gson();
+//            JSONObject jsonObject = null;
+//            try {
+//                jsonObject = new JSONObject(s);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            try {
+//                s = jsonObject.getJSONObject("response").toString();
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            JsonParser parser = new JsonParser();
+//            JsonElement rootObejct = parser.parse(s)
+//                    .getAsJsonObject()
+//                    .get("ON_AIR_FAVORITE_BROAD");
+//            Type listType = new TypeToken<List<body>>() {}.getType();
+//            List<body> list = gson.fromJson(rootObejct, listType);
+
+
+
+
+            ApplicationController.getInstance().setSeatSel(s);
+
+
+
+
+            Log.d("check12", s);
+
+
+        }
+    }
+
+    }

@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.example.kangmingu.spot.R;
 import com.example.kangmingu.spot.naverApi.NMapPOIflagType;
 import com.example.kangmingu.spot.naverApi.NMapViewerResourceProvider;
+import com.example.kangmingu.spot.utils.ApplicationController;
 import com.example.kangmingu.spot.utils.GeoPointer;
 import com.example.kangmingu.spot.view.activity.MainActivity;
 import com.nhn.android.maps.NMapCompassManager;
@@ -89,6 +90,7 @@ public class MainMapFragment extends Fragment {
         mMapLocationManager = new NMapLocationManager(super.getActivity());
         mMapContext.onCreate();
         mMapViewerResourceProvider = new NMapViewerResourceProvider(getActivity());
+
     }
 
 
@@ -192,6 +194,10 @@ public class MainMapFragment extends Fragment {
         mOverlayManager = new NMapOverlayManager(getActivity(), mapView, mMapViewerResourceProvider);
         mMapMyLocationOverlay = mOverlayManager.createMyLocationOverlay(mMapLocationManager, mMapCompassManager);
         mapView.setBuiltInZoomControls(true, null); // 줌 인/아웃 버튼 생성
+
+
+
+
         testOverlayMaker();
     }
 
