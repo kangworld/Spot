@@ -188,4 +188,11 @@ public class MainActivity extends AppCompatActivity {
             Log.e("BNVHelper", "Unable to change value of shift mode", e);
         }
     }
+
+    public void gotoDetail(Fragment fragment){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.mapFragment, fragment);
+        ft.commit();
+    }
 }
