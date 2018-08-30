@@ -8,14 +8,21 @@
     android:layout_height="match_parent"
     tools:context=".view.activity.MainActivity">
 
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/search_toolbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="?attr/actionBarSize"-->
-        <!--android:background="?attr/colorPrimary"-->
-        <!--android:elevation="4dp"-->
-        <!--android:theme="@style/ThemeOverlay.AppCompat.ActionBar"-->
-        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>-->
+    <LinearLayout
+        android:id="@+id/toolbarContainer"
+        android:background="@drawable/gradation"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.3">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/mainToolbar"
+            android:layout_gravity="bottom|left"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+        </android.support.v7.widget.Toolbar>
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/mapFragment"
         android:orientation="vertical"
@@ -29,13 +36,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintVertical_weight="1"
             android:background="?android:attr/windowBackground"
-            app:menu="@menu/navigation">
+            app:menu="@menu/navigation_main">
         </android.support.design.widget.BottomNavigationView>
     </FrameLayout>
 </LinearLayout>

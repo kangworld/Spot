@@ -14,9 +14,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -50,7 +48,7 @@ import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFragment extends Fragment {
+public class MainMapFragment extends Fragment {
     private static final String CLIENT_ID = "19gvJB99utu_FF9K3DpX";// 애플리케이션 클라이언트 아이디 값
     private static final int MY_PERMISSION_REQUEST_LOCATION = 1000;
     private NMapContext mMapContext;
@@ -85,79 +83,78 @@ public class MapFragment extends Fragment {
     }
 
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        //MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search, menu);
-        SearchView searchView = (SearchView)menu.findItem(R.id.action_search).getActionView();
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        searchView.setQueryHint("장소를 입력해주세요");
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.search, menu);
+//        SearchView searchView = (SearchView)menu.findItem(R.id.action_search).getActionView();
+//        searchView.setMaxWidth(Integer.MAX_VALUE);
+//        searchView.setQueryHint("장소를 입력해주세요");
+//
+//        //리스너 달아주기 - queryTextListener
+//        searchView.setOnQueryTextListener(queryTextListener);
+//        SearchManager searchManager = (SearchManager)getActivity().getSystemService(Context.SEARCH_SERVICE);
+//        if(null != searchManager){
+//            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+//        }
+//        searchView.setIconifiedByDefault(true);
+//    }
+//
+//    //검색 리스너 달아주기
+//    private SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+//        @Override
+//        public boolean onQueryTextSubmit(String query) {
+//            Toast.makeText(getContext(), query, Toast.LENGTH_LONG).show();
+//            GeoPointer geoPointer = new GeoPointer(getActivity(), listener);
+//            geoPointer.execute(query);
+//            return false;
+//        }
+//
+//        @Override
+//        public boolean onQueryTextChange(String newText) {
+//            return false;
+//        }
+//    };
+//
+//    //검색 리스너 구현체
+//    private GeoPointer.OnGeoPointListener listener = new GeoPointer.OnGeoPointListener() {
+//        @Override
+//        public void onPoint(GeoPointer.Point[] p) {
+//            int sCnt = 0, fCnt = 0;
+//            NGeoPoint myLocation = new NGeoPoint();
+//            for (GeoPointer.Point point : p) {
+//                if (point.havePoint) {
+//                    sCnt++;
+//                } else fCnt++;
+//                Log.d("TEST_CODE", point.toString());
+//                myLocation.latitude = point.y;
+//                myLocation.longitude = point.x;
+//            }
+//            Log.d("TEST_CODE", String.format("성공 : %s, 실패 : %s", sCnt, fCnt));
+//            Log.d("내용물", myLocation.toString());
+//            Log.d("내용물", mMapController.toString());
+//            mMapController.animateTo(myLocation);
+//            mMapController.setZoomLevel(15);
+//        }
+//
+//        @Override
+//        public void onProgress(int progress, int max) {
+//            Log.d("TEST_CODE", String.format("좌표를 얻어오는중 %s / %s", progress, max));
+//        }
+//    };
 
-        //리스너 달아주기 - queryTextListener
-        searchView.setOnQueryTextListener(queryTextListener);
-        SearchManager searchManager = (SearchManager)getActivity().getSystemService(Context.SEARCH_SERVICE);
-        if(null != searchManager){
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        }
-        searchView.setIconifiedByDefault(true);
-    }
-
-    //검색 리스너 달아주기
-    private SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-            Toast.makeText(getContext(), query, Toast.LENGTH_LONG).show();
-            GeoPointer geoPointer = new GeoPointer(getActivity(), listener);
-            geoPointer.execute(query);
-            return false;
-        }
-
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            return false;
-        }
-    };
-
-    //검색 리스너 구현체
-    private GeoPointer.OnGeoPointListener listener = new GeoPointer.OnGeoPointListener() {
-        @Override
-        public void onPoint(GeoPointer.Point[] p) {
-            int sCnt = 0, fCnt = 0;
-            NGeoPoint myLocation = new NGeoPoint();
-            for (GeoPointer.Point point : p) {
-                if (point.havePoint) {
-                    sCnt++;
-                } else fCnt++;
-                Log.d("TEST_CODE", point.toString());
-                myLocation.latitude = point.y;
-                myLocation.longitude = point.x;
-            }
-            Log.d("TEST_CODE", String.format("성공 : %s, 실패 : %s", sCnt, fCnt));
-            Log.d("내용물", myLocation.toString());
-            Log.d("내용물", mMapController.toString());
-            mMapController.animateTo(myLocation);
-            mMapController.setZoomLevel(15);
-        }
-
-        @Override
-        public void onProgress(int progress, int max) {
-            Log.d("TEST_CODE", String.format("좌표를 얻어오는중 %s / %s", progress, max));
-        }
-    };
-
-    /**
-        When Toolbar is selected this function called
-        however it doesn't called
-        dummy function
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.action_search){
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    /**
+//        When Toolbar is selected this function called
+//        however it doesn't called
+//        dummy function
+//     */
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if(id == R.id.action_search){
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     //mapView 설정 초기화
     @Override
