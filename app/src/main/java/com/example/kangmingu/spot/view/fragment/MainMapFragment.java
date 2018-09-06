@@ -30,6 +30,8 @@ import android.widget.Toast;
 import com.example.kangmingu.spot.R;
 import com.example.kangmingu.spot.naverApi.NMapPOIflagType;
 import com.example.kangmingu.spot.naverApi.NMapViewerResourceProvider;
+import com.example.kangmingu.spot.utils.ApplicationController;
+import com.example.kangmingu.spot.utils.DataJson;
 import com.example.kangmingu.spot.utils.GeoPointer;
 import com.example.kangmingu.spot.view.activity.MainActivity;
 import com.nhn.android.maps.NMapCompassManager;
@@ -89,6 +91,7 @@ public class MainMapFragment extends Fragment {
         mMapLocationManager = new NMapLocationManager(super.getActivity());
         mMapContext.onCreate();
         mMapViewerResourceProvider = new NMapViewerResourceProvider(getActivity());
+
     }
 
 
@@ -192,6 +195,10 @@ public class MainMapFragment extends Fragment {
         mOverlayManager = new NMapOverlayManager(getActivity(), mapView, mMapViewerResourceProvider);
         mMapMyLocationOverlay = mOverlayManager.createMyLocationOverlay(mMapLocationManager, mMapCompassManager);
         mapView.setBuiltInZoomControls(true, null); // 줌 인/아웃 버튼 생성
+
+
+
+
         testOverlayMaker();
     }
 
@@ -260,16 +267,27 @@ public class MainMapFragment extends Fragment {
     }
 
     private void testOverlayMaker() { //오버레이 아이템 추가 함수
+
+        DataJson dataJson = ((MainActivity)getActivity()).gotoShared();
+
+
+
+
+
         int markerId = NMapPOIflagType.PIN; //마커 id설정
         // POI 아이템 관리 클래스 생성(전체 아이템 수, NMapResourceProvider 상속 클래스)
         NMapPOIdata poiData = new NMapPOIdata(2, mMapViewerResourceProvider);
         poiData.beginPOIdata(2); // POI 아이템 추가 시작
-        NMapPOIitem item1 = poiData.addPOIitem(126.976821,37.576122, "광화문", markerId, 0);
-        item1.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW); //마커 선택 시 표시되는 말풍선의 오른쪽 아이콘을 설정한다.
-        item1.setRightButton(true); //마커 선택 시 표시되는 말풍선의 오른쪽 버튼을 설정한다.
+
+//        item1.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW); //마커 선택 시 표시되는 말풍선의 오른쪽 아이콘을 설정한다.
+//        item1.setRightButton(true); //마커 선택 시 표시되는 말풍선의 오른쪽 버튼을 설정한다.
+        for(DataJson.item item2 : dataJson.items){
+            //Log.d("itemtitle",item1.title);
+            poiData.addPOIitem(item2.mapx,item2.mapy,item2.title,markerId,0);
+        }
 
 
-        poiData.addPOIitem(126.975967, 37.573841 , "세종로공원", markerId, 0);
+        poiData.addPOIitem(126.975967, 37.573841 , "Sejongro Park(세종로공원)", markerId, 0);
         poiData.endPOIdata(); // POI 아이템 추가 종료
         //POI data overlay 객체 생성(여러 개의 오버레이 아이템을 포함할 수 있는 오버레이 클래스)
         NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
