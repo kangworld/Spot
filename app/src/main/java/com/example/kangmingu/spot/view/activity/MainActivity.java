@@ -190,9 +190,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void gotoDetail(Fragment fragment){
+        mainToolbar.removeAllViews();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.mapFragment, fragment);
         ft.commit();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home : {
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.mapFragment, mainMapFragment);
+                ft.commit();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

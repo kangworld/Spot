@@ -280,12 +280,9 @@ public class MainMapFragment extends Fragment {
             public void onFocusChanged(NMapPOIdataOverlay nMapPOIdataOverlay, NMapPOIitem nMapPOIitem) {
 
             }
-
             @Override
             public void onCalloutClick(NMapPOIdataOverlay nMapPOIdataOverlay, NMapPOIitem nMapPOIitem) {
                 ((MainActivity)getActivity()).gotoDetail(DetailFragment.newInstance("파라1",nMapPOIitem.getTitle()));
-
-
             }
         });
     }
